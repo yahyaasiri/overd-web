@@ -3,190 +3,364 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OVER D Control</title>
-<meta name="robots" content="noindex,nofollow">
+<title>OVER D — لوحة التحكم</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:sans-serif;background:#FFFFFF;color:#111111}
-:root{--gold:#1B8C4E;--gold-l:#146B3A;--surface:#FFFFFF;--muted:#666666;--border:rgba(27,140,78,0.15);--success:#3DFFA0;--danger:#FF4D6A;--accent:#1B8C4E}
-.login{position:fixed;inset:0;background:#FFFFFF;display:flex;align-items:center;justify-content:center;z-index:999}
-.login-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px;width:380px;text-align:center}
-.logo{font-size:2rem;font-weight:900;letter-spacing:4px;background:linear-gradient(135deg,var(--gold),var(--gold-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.inp{width:100%;background:#F5F5F5;border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:#111111;font-size:0.9rem;outline:none;margin:16px 0}
-.inp:focus{border-color:rgba(27,140,78,0.5)}
-.btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-l));border:none;border-radius:10px;padding:14px;color:#FFFFFF;font-size:0.95rem;font-weight:700;cursor:pointer}
-.sidebar{width:240px;background:#F5F5F5;border-left:1px solid var(--border);height:100vh;position:fixed;right:0;top:0;padding:20px 0}
-.slogo{padding:0 20px 20px;border-bottom:1px solid var(--border);font-size:1.4rem;font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,var(--gold),var(--gold-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.nitem{padding:12px 20px;cursor:pointer;color:var(--muted);font-size:0.88rem;transition:all 0.2s;border-right:3px solid transparent;display:flex;align-items:center;gap:10px}
-.nitem:hover{background:rgba(27,140,78,0.05);color:#111111}
-.nitem.active{background:rgba(27,140,78,0.08);color:var(--gold);border-right-color:var(--gold)}
-.main{margin-right:240px;padding:28px}
-.ptitle{font-size:1.6rem;font-weight:700;margin-bottom:24px}
-.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
-.scard{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px}
-.sv{font-size:1.8rem;font-weight:800;color:var(--gold)}
-.sl{font-size:0.72rem;color:var(--muted);margin-top:3px;letter-spacing:1px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:20px}
-.ch{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:0.95rem}
+:root{--green:#1DB954;--black:#0a0a0a;--black2:#111;--black3:#1a1a1a;--white:#fff;--gray:#888;--border:rgba(255,255,255,0.08);--red:#ff4444;--yellow:#f59e0b;--blue:#3b82f6}
+body{font-family:"Tajawal",sans-serif;background:var(--black);color:var(--white);min-height:100vh}
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--black)}
+.login-box{background:var(--black2);border:1px solid var(--border);border-radius:20px;padding:48px;width:360px;text-align:center}
+.login-logo{font-size:2rem;font-weight:900;letter-spacing:6px;margin-bottom:8px}
+.login-logo span{color:var(--green)}
+.login-sub{color:var(--gray);font-size:0.85rem;margin-bottom:32px}
+.login-input{width:100%;background:var(--black3);border:1px solid var(--border);border-radius:10px;padding:14px 16px;color:var(--white);font-family:"Tajawal",sans-serif;font-size:0.95rem;outline:none;margin-bottom:12px;transition:border 0.2s}
+.login-input:focus{border-color:var(--green)}
+.login-btn{width:100%;padding:14px;background:var(--green);border:none;border-radius:10px;color:var(--black);font-size:1rem;font-weight:700;font-family:"Tajawal",sans-serif;cursor:pointer;transition:all 0.2s}
+.login-btn:hover{background:#17a348}
+#app{display:none}
+.sidebar{position:fixed;right:0;top:0;bottom:0;width:220px;background:var(--black2);border-left:1px solid var(--border);padding:24px 0;z-index:100}
+.sidebar-logo{padding:0 20px 24px;font-size:1.3rem;font-weight:900;letter-spacing:4px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo span{color:var(--green)}
+.nav-item{display:flex;align-items:center;gap:10px;padding:12px 20px;cursor:pointer;color:var(--gray);font-size:0.88rem;font-weight:500;transition:all 0.2s;border-right:3px solid transparent}
+.nav-item:hover{color:var(--white);background:rgba(255,255,255,0.03)}
+.nav-item.active{color:var(--green);border-right-color:var(--green);background:rgba(29,185,84,0.05)}
+.nav-icon{font-size:1.1rem;width:20px;text-align:center}
+.main{margin-right:220px;padding:32px;min-height:100vh}
+.page{display:none}
+.page.active{display:block}
+.page-title{font-size:1.8rem;font-weight:800;margin-bottom:8px}
+.page-sub{color:var(--gray);font-size:0.85rem;margin-bottom:32px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.stat-card{background:var(--black2);border:1px solid var(--border);border-radius:16px;padding:24px;transition:border-color 0.2s}
+.stat-card:hover{border-color:rgba(29,185,84,0.3)}
+.stat-label{font-size:0.75rem;color:var(--gray);letter-spacing:1px;margin-bottom:10px}
+.stat-val{font-size:2rem;font-weight:800;color:var(--white)}
+.stat-val.green{color:var(--green)}
+.stat-icon{font-size:1.5rem;margin-bottom:12px}
 table{width:100%;border-collapse:collapse}
-th{padding:10px 14px;text-align:right;font-size:0.68rem;color:var(--muted);letter-spacing:1.5px;border-bottom:1px solid var(--border)}
-td{padding:12px 14px;font-size:0.82rem;border-bottom:1px solid rgba(255,255,255,0.03)}
-tr:last-child td{border:none}
-.badge{padding:3px 8px;border-radius:12px;font-size:0.68rem;font-weight:600}
-.b-ok{background:rgba(61,255,160,0.12);color:var(--success)}
-.b-pending{background:rgba(255,179,0,0.12);color:#FFB300}
-.b-err{background:rgba(255,77,106,0.12);color:var(--danger)}
-.rfbtn{background:rgba(27,140,78,0.1);border:1px solid var(--border);color:var(--gold);padding:5px 12px;border-radius:6px;font-size:0.75rem;cursor:pointer}
-.sfooter{padding:16px 20px;border-top:1px solid var(--border)}
-.sdot{width:7px;height:7px;border-radius:50%;background:var(--success);animation:blink 1.5s infinite;display:inline-block}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.table-wrap{background:var(--black2);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.table-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.table-header h3{font-size:1rem;font-weight:700}
+th{padding:12px 16px;text-align:right;font-size:0.72rem;color:var(--gray);letter-spacing:1px;font-weight:600;background:var(--black3);border-bottom:1px solid var(--border)}
+td{padding:14px 16px;font-size:0.83rem;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,0.02)}
+.badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:0.7rem;font-weight:700}
+.badge-green{background:rgba(29,185,84,0.15);color:var(--green)}
+.badge-red{background:rgba(255,68,68,0.15);color:var(--red)}
+.badge-yellow{background:rgba(245,158,11,0.15);color:var(--yellow)}
+.badge-gray{background:rgba(136,136,136,0.15);color:var(--gray)}
+.badge-blue{background:rgba(59,130,246,0.15);color:var(--blue)}
+.btn{padding:6px 14px;border:none;border-radius:8px;font-size:0.75rem;font-weight:700;font-family:"Tajawal",sans-serif;cursor:pointer;transition:all 0.2s}
+.btn-green{background:rgba(29,185,84,0.15);color:var(--green)}
+.btn-green:hover{background:var(--green);color:var(--black)}
+.btn-red{background:rgba(255,68,68,0.15);color:var(--red)}
+.btn-red:hover{background:var(--red);color:var(--white)}
+.search-input{background:var(--black3);border:1px solid var(--border);border-radius:10px;padding:8px 14px;color:var(--white);font-family:"Tajawal",sans-serif;font-size:0.85rem;outline:none;width:220px}
+.search-input:focus{border-color:var(--green)}
+.loading{text-align:center;padding:40px;color:var(--gray)}
+.income-chart{display:flex;align-items:flex-end;gap:8px;height:120px;margin-top:16px}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.bar{background:rgba(29,185,84,0.3);border-radius:4px 4px 0 0;width:100%;transition:all 0.3s;cursor:pointer}
+.bar:hover{background:var(--green)}
+.bar-label{font-size:0.65rem;color:var(--gray)}
+.empty{text-align:center;padding:40px;color:var(--gray);font-size:0.85rem}
+.refresh-btn{background:transparent;border:1px solid var(--border);border-radius:8px;padding:6px 14px;color:var(--gray);font-family:"Tajawal",sans-serif;font-size:0.78rem;cursor:pointer;transition:all 0.2s}
+.refresh-btn:hover{border-color:var(--green);color:var(--green)}
 </style>
 </head>
 <body>
-<div class="login" id="loginDiv">
-  <div class="login-card">
-    <div class="logo">OVER D</div>
-    <div style="color:var(--muted);font-size:0.82rem;margin-bottom:8px">لوحة التحكم السرية</div>
-    <input type="password" class="inp" id="pass" placeholder="كلمة المرور السرية" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="btn" onclick="doLogin()">دخول</button>
-    <div id="lerr" style="color:var(--danger);font-size:0.8rem;margin-top:10px"></div>
+
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">OVER<span>D</span></div>
+    <div class="login-sub">لوحة تحكم الإدارة</div>
+    <input id="admin-pass" class="login-input" type="password" placeholder="كلمة المرور">
+    <div id="login-err" style="color:var(--red);font-size:0.8rem;margin-bottom:12px;display:none">كلمة المرور غير صحيحة</div>
+    <button class="login-btn" onclick="doLogin()">دخول</button>
   </div>
 </div>
-<aside class="sidebar" id="sidebarDiv" style="display:none">
-  <div class="slogo" style="margin-bottom:16px">OVER D</div>
-  <div class="nitem active" onclick="show('dash',this)">📊 لوحة المعلومات</div>
-  <div class="nitem" onclick="show('rides',this)">🚗 الرحلات</div>
-  <div class="nitem" onclick="show('users',this)">👥 المستخدمون</div>
-  <div class="nitem" onclick="show('drivers',this)">🧑‍✈️ السائقون</div>
-  <div class="nitem" onclick="show('api',this)">⚙️ إعدادات API</div>
-  <div style="position:absolute;bottom:16px;width:100%;padding:0 20px">
-    <div style="display:flex;align-items:center;gap:8px;font-size:0.75rem;color:var(--muted)">
-      <span class="sdot" id="sdot"></span>
-      <span id="sstat">جاري الاتصال...</span>
+
+<div id="app">
+  <div class="sidebar">
+    <div class="sidebar-logo">OVER<span>D</span></div>
+    <div class="nav-item active" onclick="showPage('dashboard',this)"><span class="nav-icon">📊</span> الرئيسية</div>
+    <div class="nav-item" onclick="showPage('drivers',this)"><span class="nav-icon">🚗</span> الكباتن</div>
+    <div class="nav-item" onclick="showPage('pending',this)"><span class="nav-icon">⏳</span> طلبات الانضمام</div>
+    <div class="nav-item" onclick="showPage('users',this)"><span class="nav-icon">👥</span> العملاء</div>
+    <div class="nav-item" onclick="showPage('rides',this)"><span class="nav-icon">🗺️</span> الرحلات</div>
+    <div class="nav-item" onclick="showPage('income',this)"><span class="nav-icon">💰</span> الدخل</div>
+    <div style="position:absolute;bottom:20px;right:0;left:0;padding:0 20px">
+      <button onclick="logout()" style="width:100%;padding:10px;background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.2);border-radius:10px;color:var(--red);font-family:Tajawal,sans-serif;font-size:0.82rem;cursor:pointer">تسجيل الخروج</button>
     </div>
   </div>
-</aside>
-<main class="main" id="mainDiv" style="display:none">
-  <div id="p-dash">
-    <div class="ptitle">لوحة المعلومات 📊</div>
-    <div class="sgrid">
-      <div class="scard"><div class="sv" style="color:var(--gold)" id="s1">—</div><div class="sl">إجمالي الإيرادات ﷼</div></div>
-      <div class="scard"><div class="sv" style="color:var(--accent)" id="s2">—</div><div class="sl">إجمالي الرحلات</div></div>
-      <div class="scard"><div class="sv" style="color:var(--success)" id="s3">—</div><div class="sl">المستخدمون</div></div>
-      <div class="scard"><div class="sv" style="color:var(--gold)" id="s4">—</div><div class="sl">السائقون النشطون</div></div>
+
+  <div class="main">
+    <!-- Dashboard -->
+    <div id="page-dashboard" class="page active">
+      <div class="page-title">لوحة التحكم</div>
+      <div class="page-sub" id="last-update">جاري التحميل...</div>
+      <div class="stats-grid" id="stats-grid"><div class="loading">⏳ جاري التحميل...</div></div>
+      <div class="table-wrap">
+        <div class="table-header"><h3>📈 الدخل — آخر 7 أيام</h3><button class="refresh-btn" onclick="loadIncome()">تحديث</button></div>
+        <div style="padding:24px" id="income-chart"><div class="loading">⏳</div></div>
+      </div>
     </div>
-    <div class="card">
-      <div class="ch">آخر الرحلات <button class="rfbtn" onclick="loadRides()">🔄</button></div>
-      <div id="ridesT"><div style="padding:30px;text-align:center;color:var(--muted)">جاري التحميل...</div></div>
+
+    <!-- Drivers -->
+    <div id="page-drivers" class="page">
+      <div class="page-title">الكباتن</div>
+      <div class="page-sub">جميع الكباتن المسجلين</div>
+      <div class="table-wrap">
+        <div class="table-header"><h3>قائمة الكباتن</h3><input class="search-input" placeholder="بحث..." oninput="filterTable(this,'drivers-table')"></div>
+        <div id="drivers-table"><div class="loading">⏳</div></div>
+      </div>
+    </div>
+
+    <!-- Pending -->
+    <div id="page-pending" class="page">
+      <div class="page-title">طلبات الانضمام</div>
+      <div class="page-sub">كباتن ينتظرون المراجعة</div>
+      <div class="table-wrap">
+        <div class="table-header"><h3>الطلبات المعلقة</h3><button class="refresh-btn" onclick="loadPending()">تحديث</button></div>
+        <div id="pending-table"><div class="loading">⏳</div></div>
+      </div>
+    </div>
+
+    <!-- Users -->
+    <div id="page-users" class="page">
+      <div class="page-title">العملاء</div>
+      <div class="page-sub">جميع المستخدمين المسجلين</div>
+      <div class="table-wrap">
+        <div class="table-header"><h3>قائمة العملاء</h3><input class="search-input" placeholder="بحث..." oninput="filterTable(this,'users-table')"></div>
+        <div id="users-table"><div class="loading">⏳</div></div>
+      </div>
+    </div>
+
+    <!-- Rides -->
+    <div id="page-rides" class="page">
+      <div class="page-title">الرحلات</div>
+      <div class="page-sub">آخر 100 رحلة</div>
+      <div class="table-wrap">
+        <div class="table-header"><h3>سجل الرحلات</h3><input class="search-input" placeholder="بحث..." oninput="filterTable(this,'rides-table')"></div>
+        <div id="rides-table"><div class="loading">⏳</div></div>
+      </div>
+    </div>
+
+    <!-- Income -->
+    <div id="page-income" class="page">
+      <div class="page-title">تقرير الدخل</div>
+      <div class="page-sub">آخر 7 أيام</div>
+      <div class="table-wrap">
+        <div class="table-header"><h3>تفاصيل الدخل اليومي</h3></div>
+        <div id="income-table"><div class="loading">⏳</div></div>
+      </div>
     </div>
   </div>
-  <div id="p-rides" style="display:none">
-    <div class="ptitle">الرحلات 🚗</div>
-    <div class="card"><div class="ch">جميع الرحلات <button class="rfbtn" onclick="loadRides()">🔄</button></div><div id="allRidesT"></div></div>
-  </div>
-  <div id="p-users" style="display:none">
-    <div class="ptitle">المستخدمون 👥</div>
-    <div class="card"><div class="ch">قائمة المستخدمين <button class="rfbtn" onclick="loadUsers()">🔄</button></div><div id="usersT"></div></div>
-  </div>
-  <div id="p-drivers" style="display:none">
-    <div class="ptitle">السائقون 🧑‍✈️</div>
-    <div class="card"><div class="ch">قائمة السائقين</div><div id="driversT"></div></div>
-  </div>
-  <div id="p-api" style="display:none">
-    <div class="ptitle">إعدادات API ⚙️</div>
-    <div class="card">
-      <div class="ch">حالة الاتصال</div>
-      <div style="padding:20px" id="apiDetails">جاري الفحص...</div>
-    </div>
-  </div>
-</main>
+</div>
+
 <script>
-const API = "https://velox-backend-production-e360.up.railway.app";
-const SECRET = "!@PQLAMZ--KMM88--hgwrv1234!@";
+const API = "https://overd.online";
+const KEY = "overd_admin_2026";
+var adminPass = "";
 
 function doLogin(){
-  if(document.getElementById("pass").value===SECRET){
-    document.getElementById("loginDiv").style.display="none";
-    document.getElementById("sidebarDiv").style.display="block";
-    document.getElementById("mainDiv").style.display="block";
-    localStorage.setItem("v_admin","ok");
-    init();
+  var p = document.getElementById("admin-pass").value;
+  if(p === "OverD@Admin2026"){
+    adminPass = KEY;
+    document.getElementById("login-screen").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    loadDashboard();
   } else {
-    document.getElementById("lerr").textContent="كلمة المرور غير صحيحة ❌";
+    document.getElementById("login-err").style.display = "block";
   }
 }
+document.getElementById("admin-pass").addEventListener("keydown", function(e){ if(e.key==="Enter") doLogin(); });
 
-function show(page, el){
-  document.querySelectorAll('[id^="p-"]').forEach(p=>p.style.display="none");
-  document.querySelectorAll(".nitem").forEach(n=>n.classList.remove("active"));
-  document.getElementById("p-"+page).style.display="block";
+function logout(){ location.reload(); }
+
+function api(path){ return fetch(API+path,{headers:{"x-admin-key":KEY}}).then(r=>r.json()); }
+
+function showPage(name, el){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+  document.getElementById("page-"+name).classList.add("active");
   el.classList.add("active");
-  if(page==="rides")loadRides();
-  if(page==="users")loadUsers();
-  if(page==="api")loadApiInfo();
+  if(name==="drivers") loadDrivers();
+  if(name==="pending") loadPending();
+  if(name==="users") loadUsers();
+  if(name==="rides") loadRides();
+  if(name==="income") loadIncomeTable();
 }
 
-async function init(){
-  checkHealth();
-  loadStats();
-  loadRides();
+function statusBadge(s){
+  var map={completed:"badge-green",cancelled:"badge-red",in_progress:"badge-blue",searching:"badge-yellow",matched:"badge-blue",on_the_way:"badge-blue",arrived:"badge-yellow"};
+  var labels={completed:"مكتملة",cancelled:"ملغاة",in_progress:"جارية",searching:"تبحث",matched:"تم المطابقة",on_the_way:"في الطريق",arrived:"وصل"};
+  return "<span class='badge "+(map[s]||"badge-gray")+"'>"+(labels[s]||s)+"</span>";
 }
 
-async function checkHealth(){
-  try{
-    const d=await fetch(API+"/health").then(r=>r.json());
-    const ok=d.status==="healthy";
-    document.getElementById("sdot").style.background=ok?"#3DFFA0":"#FF4D6A";
-    document.getElementById("sstat").textContent=ok?"متصل ✅":"غير متصل ❌";
-  }catch(e){document.getElementById("sstat").textContent="خطأ ❌";}
+function driverStatusBadge(s){
+  var map={online:"badge-green",offline:"badge-gray",busy:"badge-yellow"};
+  var labels={online:"متصل",offline:"غير متصل",busy:"مشغول"};
+  return "<span class='badge "+(map[s]||"badge-gray")+"'>"+(labels[s]||s)+"</span>";
 }
 
-function loadStats(){
-  document.getElementById("s1").textContent="٢٤,٣٨٠";
-  document.getElementById("s2").textContent="١,٢٣٤";
-  document.getElementById("s3").textContent="٣٤٥";
-  document.getElementById("s4").textContent="٤٢";
+function loadDashboard(){
+  api("/api/admin/stats").then(d=>{
+    if(!d.success) return;
+    var s = d.data;
+    document.getElementById("stats-grid").innerHTML = `
+      <div class="stat-card"><div class="stat-icon">🚗</div><div class="stat-label">رحلات اليوم</div><div class="stat-val green">${s.rides_24h}</div></div>
+      <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">دخل اليوم (SAR)</div><div class="stat-val green">${parseFloat(s.income_24h).toFixed(2)}</div></div>
+      <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-label">إجمالي العملاء</div><div class="stat-val">${s.total_users}</div></div>
+      <div class="stat-card"><div class="stat-icon">🚕</div><div class="stat-label">إجمالي الكباتن</div><div class="stat-val">${s.total_drivers}</div></div>
+      <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-label">طلبات انضمام</div><div class="stat-val ${s.pending_drivers>0?"green":""}">${s.pending_drivers}</div></div>
+      <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-label">إجمالي الرحلات</div><div class="stat-val">${s.total_rides}</div></div>
+      <div class="stat-card"><div class="stat-icon">⚠️</div><div class="stat-label">شكاوى (7 أيام)</div><div class="stat-val ${s.complaints_7d>0?"":"green"}">${s.complaints_7d}</div></div>
+    `;
+    document.getElementById("last-update").textContent = "آخر تحديث: " + new Date().toLocaleString("ar-SA");
+  });
+  loadIncome();
 }
 
-function renderRides(){
-  var rows=[
-    ["a4916c","محمد الأحمدي","حي النخيل","برج المملكة","٤٢.٤٦","completed"],
-    ["b7823d","سارة القحطاني","العليا","المطار","٨٥.٠٠","on_the_way"],
-    ["c9012e","خالد العمري","الروضة","السليمانية","٣٢.٠٠","searching"],
-    ["d1234f","نورة المطيري","الملقا","النخيل","٥٥.٠٠","completed"],
-    ["e5678a","فيصل الدوسري","الياسمين","العليا","٢٨.٠٠","cancelled"],
-  ];
-  var statusMap={completed:["b-ok","مكتملة"],on_the_way:["b-pending","في الطريق"],searching:["b-pending","بحث"],cancelled:["b-err","ملغاة"]};
-  var html="<table><thead><tr><th>المعرف</th><th>المستخدم</th><th>من</th><th>إلى</th><th>السعر</th><th>الحالة</th></tr></thead><tbody>";
-  for(var i=0;i<rows.length;i++){
-    var r=rows[i];
-    var st=statusMap[r[5]]||["b-pending",r[5]];
-    html+="<tr><td style=\"color:var(--muted);font-size:0.72rem\">"+r[0]+"...</td><td>"+r[1]+"</td><td>"+r[2]+"</td><td>"+r[3]+"</td><td style=\"color:var(--gold);font-weight:600\">"+r[4]+" ﷼</td><td><span class=\"badge "+st[0]+"\">"+st[1]+"</span></td></tr>";
-  }
-  html+="</tbody></table>";
-  return html;
+function loadIncome(){
+  api("/api/admin/income").then(d=>{
+    if(!d.success||!d.data.income.length){ document.getElementById("income-chart").innerHTML="<div class='empty'>لا توجد بيانات</div>"; return; }
+    var data = d.data.income.reverse();
+    var max = Math.max(...data.map(x=>parseFloat(x.income)||0));
+    var html = data.map(x=>{
+      var h = max>0 ? Math.max(8,Math.round((parseFloat(x.income)/max)*100)) : 8;
+      return `<div class="bar-wrap"><div class="bar" style="height:${h}px" title="${x.income} SAR"></div><div class="bar-label">${x.day?x.day.toString().slice(5):""}</div></div>`;
+    }).join("");
+    document.getElementById("income-chart").innerHTML = "<div class='income-chart'>"+html+"</div><div style='margin-top:12px;font-size:0.75rem;color:var(--gray)'>إجمالي الفترة: <span style='color:var(--green);font-weight:700'>"+data.reduce((a,x)=>a+parseFloat(x.income||0),0).toFixed(2)+" SAR</span></div>";
+  });
 }
-function loadRides(){
-  document.getElementById("ridesT").innerHTML=renderRides();
-  if(document.getElementById("allRidesT"))document.getElementById("allRidesT").innerHTML=renderRides();
+
+function loadDrivers(){
+  api("/api/admin/drivers").then(d=>{
+    if(!d.success) return;
+    var rows = d.data.drivers.filter(x=>x.is_verified==1).map(x=>`
+      <tr>
+        <td>${x.name}</td>
+        <td>${x.phone}</td>
+        <td>${x.car_model||"-"} ${x.car_year||""}</td>
+        <td>${x.plate_number||"-"}</td>
+        <td><span class="badge badge-blue">${x.category}</span></td>
+        <td>${driverStatusBadge(x.status)}</td>
+        <td>⭐ ${x.rating}</td>
+        <td>${x.total_rides}</td>
+        <td><button class="btn btn-red" onclick="banDriver('${x.id}')">حظر</button></td>
+      </tr>`).join("");
+    document.getElementById("drivers-table").innerHTML = rows.length ?
+      "<table><thead><tr><th>الاسم</th><th>الهاتف</th><th>السيارة</th><th>اللوحة</th><th>الفئة</th><th>الحالة</th><th>التقييم</th><th>الرحلات</th><th></th></tr></thead><tbody>"+rows+"</tbody></table>" :
+      "<div class='empty'>لا يوجد كباتن</div>";
+  });
+}
+
+function loadPending(){
+  api("/api/admin/drivers").then(d=>{
+    if(!d.success) return;
+    var rows = d.data.drivers.filter(x=>x.is_verified==0&&x.is_active==1).map(x=>`
+      <tr>
+        <td>${x.name}</td>
+        <td>${x.phone}</td>
+        <td>${x.car_model||"-"} ${x.car_year||""}</td>
+        <td>${x.plate_number||"-"}</td>
+        <td><span class="badge badge-blue">${x.category}</span></td>
+        <td>${new Date(x.created_at).toLocaleDateString("ar-SA")}</td>
+        <td>
+          <button class="btn btn-green" onclick="verifyDriver('${x.id}')">✅ قبول</button>
+          <button class="btn btn-red" onclick="banDriver('${x.id}')" style="margin-right:6px">❌ رفض</button>
+        </td>
+      </tr>`).join("");
+    document.getElementById("pending-table").innerHTML = rows.length ?
+      "<table><thead><tr><th>الاسم</th><th>الهاتف</th><th>السيارة</th><th>اللوحة</th><th>الفئة</th><th>تاريخ الطلب</th><th>الإجراء</th></tr></thead><tbody>"+rows+"</tbody></table>" :
+      "<div class='empty'>✅ لا توجد طلبات معلقة</div>";
+  });
 }
 
 function loadUsers(){
-  document.getElementById("usersT").innerHTML="<table><thead><tr><th>الاسم</th><th>الهاتف</th><th>المحفظة</th><th>النقاط</th><th>الحالة</th></tr></thead><tbody><tr><td>محمد الأحمدي</td><td>+966500000099</td><td style=\"color:var(--gold)\">١٥٠ ﷼</td><td>١٢٤٠</td><td><span class=\"badge b-ok\">نشط</span></td></tr><tr><td>تجربة الربط</td><td>+966511999888</td><td style=\"color:var(--gold)\">٠ ﷼</td><td>٠</td><td><span class=\"badge b-ok\">نشط</span></td></tr></tbody></table>";
-}
-async function loadApiInfo(){
-  try{
-    var d=await fetch(API+"/health").then(function(r){return r.json();});
-    document.getElementById("apiDetails").innerHTML="<div style=\"display:grid;gap:10px\"><div style=\"padding:12px;background:#F5F5F5;border-radius:8px;font-size:0.82rem\"><span style=\"color:var(--muted)\">API URL: </span><span style=\"color:var(--gold)\">"+API+"</span></div><div style=\"padding:12px;background:#F5F5F5;border-radius:8px\"><span style=\"color:var(--muted)\">Database: </span><span style=\"color:var(--success)\">"+d.database+" MySQL</span></div><div style=\"padding:12px;background:#F5F5F5;border-radius:8px\"><span style=\"color:var(--muted)\">Redis: </span><span style=\"color:var(--success)\">"+d.redis+"</span></div></div>";
-  }catch(e){document.getElementById("apiDetails").textContent="Error: "+e.message;}
+  api("/api/admin/users").then(d=>{
+    if(!d.success) return;
+    var rows = d.data.users.map(x=>`
+      <tr>
+        <td>${x.name}</td>
+        <td>${x.phone}</td>
+        <td>${parseFloat(x.wallet_balance||0).toFixed(2)} SAR</td>
+        <td>${x.loyalty_points||0} نقطة</td>
+        <td>${x.is_active?"<span class='badge badge-green'>نشط</span>":"<span class='badge badge-red'>محظور</span>"}</td>
+        <td>${new Date(x.created_at).toLocaleDateString("ar-SA")}</td>
+        <td>${x.is_active?"<button class='btn btn-red' onclick='banUser(""+x.id+"")'>حظر</button>":"-"}</td>
+      </tr>`).join("");
+    document.getElementById("users-table").innerHTML = rows.length ?
+      "<table><thead><tr><th>الاسم</th><th>الهاتف</th><th>المحفظة</th><th>النقاط</th><th>الحالة</th><th>تاريخ التسجيل</th><th></th></tr></thead><tbody>"+rows+"</tbody></table>" :
+      "<div class='empty'>لا يوجد عملاء</div>";
+  });
 }
 
-if(localStorage.getItem("v_admin")==="ok"){
-  document.getElementById("loginDiv").style.display="none";
-  document.getElementById("sidebarDiv").style.display="block";
-  document.getElementById("mainDiv").style.display="block";
-  init();
+function loadRides(){
+  api("/api/admin/rides").then(d=>{
+    if(!d.success) return;
+    var rows = d.data.rides.map(x=>`
+      <tr>
+        <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${x.pickup_address||"-"}</td>
+        <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${x.drop_address||"-"}</td>
+        <td>${x.user_name||"-"}</td>
+        <td>${x.driver_name||"-"}</td>
+        <td><span class="badge badge-blue">${x.category}</span></td>
+        <td>${statusBadge(x.status)}</td>
+        <td>${x.final_price?parseFloat(x.final_price).toFixed(2)+" SAR":"-"}</td>
+        <td>${x.distance_km?parseFloat(x.distance_km).toFixed(1)+" كم":"-"}</td>
+        <td>${new Date(x.created_at).toLocaleDateString("ar-SA")}</td>
+      </tr>`).join("");
+    document.getElementById("rides-table").innerHTML = rows.length ?
+      "<table><thead><tr><th>من</th><th>إلى</th><th>العميل</th><th>الكابتن</th><th>الفئة</th><th>الحالة</th><th>السعر</th><th>المسافة</th><th>التاريخ</th></tr></thead><tbody>"+rows+"</tbody></table>" :
+      "<div class='empty'>لا توجد رحلات</div>";
+  });
 }
+
+function loadIncomeTable(){
+  api("/api/admin/income").then(d=>{
+    if(!d.success) return;
+    var rows = d.data.income.map(x=>`
+      <tr>
+        <td>${x.day}</td>
+        <td>${x.rides}</td>
+        <td style="color:var(--green);font-weight:700">${parseFloat(x.income||0).toFixed(2)} SAR</td>
+        <td>${x.rides>0?(parseFloat(x.income||0)/x.rides).toFixed(2)+" SAR":"-"}</td>
+      </tr>`).join("");
+    document.getElementById("income-table").innerHTML = rows.length ?
+      "<table><thead><tr><th>اليوم</th><th>عدد الرحلات</th><th>الدخل الكلي</th><th>متوسط الرحلة</th></tr></thead><tbody>"+rows+"</tbody></table>" :
+      "<div class='empty'>لا توجد بيانات</div>";
+  });
+}
+
+function verifyDriver(id){
+  if(!confirm("تأكيد قبول الكابتن؟")) return;
+  fetch(API+"/api/admin/drivers/"+id+"/verify",{method:"POST",headers:{"x-admin-key":KEY}})
+    .then(r=>r.json()).then(d=>{ alert(d.data?.message||"تم"); loadPending(); });
+}
+
+function banDriver(id){
+  if(!confirm("تأكيد حظر الكابتن؟")) return;
+  fetch(API+"/api/admin/drivers/"+id+"/ban",{method:"POST",headers:{"x-admin-key":KEY}})
+    .then(r=>r.json()).then(d=>{ alert(d.data?.message||"تم"); loadPending(); loadDrivers(); });
+}
+
+function banUser(id){
+  if(!confirm("تأكيد حظر العميل؟")) return;
+  fetch(API+"/api/admin/users/"+id+"/ban",{method:"POST",headers:{"x-admin-key":KEY}})
+    .then(r=>r.json()).then(d=>{ alert(d.data?.message||"تم"); loadUsers(); });
+}
+
+function filterTable(input, containerId){
+  var val = input.value.toLowerCase();
+  var rows = document.querySelectorAll("#"+containerId+" tbody tr");
+  rows.forEach(r=>{ r.style.display = r.textContent.toLowerCase().includes(val) ? "" : "none"; });
+}
+
+setInterval(function(){ if(document.getElementById("page-dashboard").classList.contains("active")) loadDashboard(); }, 30000);
 </script>
 </body>
 </html>
