@@ -277,7 +277,7 @@ function loadDrivers(){
 function loadPending(){
   api("/api/admin/drivers").then(d=>{
     if(!d.success) return;
-    var rows = d.data.drivers.filter(x=>x.is_verified==0&&x.is_active==1).map(x=>`
+    var rows = d.data.drivers.filter(x=>parseInt(x.is_verified)===0&&parseInt(x.is_active)===1).map(x=>`
       <tr>
         <td>${x.name}</td>
         <td>${x.phone}</td>
