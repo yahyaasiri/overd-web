@@ -76,9 +76,12 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   <div class="login-box">
     <div class="login-logo">OVER<span>D</span></div>
     <div class="login-sub">لوحة تحكم الإدارة</div>
-    <input id="admin-pass" class="login-input" type="password" placeholder="كلمة المرور">
+    <div style="position:relative;margin-bottom:12px">
+      <input id="admin-pass" class="login-input" type="password" placeholder="كلمة المرور" style="margin-bottom:0;padding-left:44px">
+      <span onclick="togglePass()" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:1.1rem;user-select:none" id="eye-icon">👁</span>
+    </div>
     <div id="login-err" style="color:var(--red);font-size:0.8rem;margin-bottom:12px;display:none">كلمة المرور غير صحيحة</div>
-    <button class="login-btn" onclick="doLogin()">دخول</button>
+    <button class="login-btn" id="login-btn">دخول</button>
   </div>
 </div>
 
@@ -164,6 +167,15 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 const API = "https://overd.online";
 const KEY = "overd_admin_2026";
 var adminPass = "";
+
+function togglePass(){
+  var inp = document.getElementById("admin-pass");
+  var eye = document.getElementById("eye-icon");
+  if(inp.type==="password"){ inp.type="text"; eye.textContent="🙈"; }
+  else { inp.type="password"; eye.textContent="👁"; }
+}
+
+document.getElementById("login-btn").addEventListener("click", doLogin);
 
 function doLogin(){
   var p = document.getElementById("admin-pass").value;
