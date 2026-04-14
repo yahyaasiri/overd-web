@@ -109,6 +109,12 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:56px 6
 </nav>
 <div class="hero">
 <div class="hero-bg"></div>
+<div style="position:relative;z-index:2;margin-bottom:28px;display:flex;justify-content:center">
+  <div id="live-pill" style="display:inline-flex;align-items:center;gap:10px;background:rgba(29,185,84,0.1);border:1px solid rgba(29,185,84,0.3);border-radius:30px;padding:8px 20px;font-size:0.82rem;color:#1DB954;font-weight:600">
+    <span style="width:7px;height:7px;border-radius:50%;background:#1DB954;animation:blink 1.5s infinite;display:inline-block"></span>
+    <span id="live-text">🚗 ٥ سيارات متوفرة الآن بالقرب منك</span>
+  </div>
+</div>
 <div class="hero-grid"></div>
 <div class="hero-content">
 <div class="badge">✦ منصة توصيل رائدة في المملكة العربية السعودية</div>
@@ -188,6 +194,22 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:56px 6
 </footer>
 <script>
 var r=1234;
+var msgs=[
+  "🚗 {n} سيارات متوفرة الآن بالقرب منك",
+  "⏱ أقرب كابتن يصل خلال {n} دقائق",
+  "📍 {n} رحلة تمت خلال آخر ساعة في الدمام",
+  "🚗 {n} كباتن نشطون الآن في منطقتك"
+];
+var mi=0;
+function updateLive(){
+  var n=Math.floor(Math.random()*5)+3;
+  var txt=msgs[mi%msgs.length].replace("{n}",n);
+  var el=document.getElementById("live-text");
+  if(el)el.textContent=txt;
+  mi++;
+}
+setInterval(updateLive,4000);
+updateLive();
 setInterval(function(){r+=Math.floor(Math.random()*3);var el=document.getElementById("lrides");if(el)el.textContent=r.toLocaleString("ar-SA");},5000);
 </script>
 </body>
