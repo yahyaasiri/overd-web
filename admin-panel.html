@@ -175,7 +175,7 @@ function togglePass(){
   else { inp.type="password"; eye.textContent="👁"; }
 }
 
-document.getElementById("login-btn").addEventListener("click", doLogin);
+document.addEventListener("DOMContentLoaded", function(){ document.getElementById("login-btn").addEventListener("click", doLogin);  });
 
 function doLogin(){
   var p = document.getElementById("admin-pass").value;
@@ -188,7 +188,7 @@ function doLogin(){
     document.getElementById("login-err").style.display = "block";
   }
 }
-document.getElementById("admin-pass").addEventListener("keydown", function(e){ if(e.key==="Enter") doLogin(); });
+
 
 function logout(){ location.reload(); }
 
