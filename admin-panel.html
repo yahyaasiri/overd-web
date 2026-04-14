@@ -178,7 +178,7 @@ function togglePass(){
 
 
 function setCookie(v){var d=new Date();d.setTime(d.getTime()+(30*24*60*60*1000));document.cookie='oa='+v+';expires='+d.toUTCString()+';path=/';}
-function getCookie(){var v=document.cookie.match('(^|;)\s*oa\s*=\s*([^;]+)');return v?v.pop():'';}
+function getCookie(){var v=document.cookie.split(';');for(var i=0;i<v.length;i++){var c=v[i].trim();if(c.startsWith('oa=')){return c.substring(3);}}return '';}
 if(getCookie()==='1'){adminPass=KEY;document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';loadDashboard();}
 function doLogin(){
   var p = document.getElementById("admin-pass").value;
