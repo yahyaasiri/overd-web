@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OVER D Control</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:sans-serif;background:#FFFFFF;color:#111111}
+:root{--gold:#1B8C4E;--gold-l:#146B3A;--surface:#FFFFFF;--muted:#666666;--border:rgba(27,140,78,0.15);--success:#3DFFA0;--danger:#FF4D6A;--accent:#1B8C4E}
+.login{position:fixed;inset:0;background:#FFFFFF;display:flex;align-items:center;justify-content:center;z-index:999}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px;width:380px;text-align:center}
+.logo{font-size:2rem;font-weight:900;letter-spacing:4px;background:linear-gradient(135deg,var(--gold),var(--gold-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.inp{width:100%;background:#F5F5F5;border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:#111111;font-size:0.9rem;outline:none;margin:16px 0}
+.inp:focus{border-color:rgba(27,140,78,0.5)}
+.btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-l));border:none;border-radius:10px;padding:14px;color:#FFFFFF;font-size:0.95rem;font-weight:700;cursor:pointer}
+.sidebar{width:240px;background:#F5F5F5;border-left:1px solid var(--border);height:100vh;position:fixed;right:0;top:0;padding:20px 0}
+.slogo{padding:0 20px 20px;border-bottom:1px solid var(--border);font-size:1.4rem;font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,var(--gold),var(--gold-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nitem{padding:12px 20px;cursor:pointer;color:var(--muted);font-size:0.88rem;transition:all 0.2s;border-right:3px solid transparent;display:flex;align-items:center;gap:10px}
+.nitem:hover{background:rgba(27,140,78,0.05);color:#111111}
+.nitem.active{background:rgba(27,140,78,0.08);color:var(--gold);border-right-color:var(--gold)}
+.main{margin-right:240px;padding:28px}
+.ptitle{font-size:1.6rem;font-weight:700;margin-bottom:24px}
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.scard{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px}
+.sv{font-size:1.8rem;font-weight:800;color:var(--gold)}
+.sl{font-size:0.72rem;color:var(--muted);margin-top:3px;letter-spacing:1px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:20px}
+.ch{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:0.95rem}
+table{width:100%;border-collapse:collapse}
+th{padding:10px 14px;text-align:right;font-size:0.68rem;color:var(--muted);letter-spacing:1.5px;border-bottom:1px solid var(--border)}
+td{padding:12px 14px;font-size:0.82rem;border-bottom:1px solid rgba(255,255,255,0.03)}
+tr:last-child td{border:none}
+.badge{padding:3px 8px;border-radius:12px;font-size:0.68rem;font-weight:600}
+.b-ok{background:rgba(61,255,160,0.12);color:var(--success)}
+.b-pending{background:rgba(255,179,0,0.12);color:#FFB300}
+.b-err{background:rgba(255,77,106,0.12);color:var(--danger)}
+.rfbtn{background:rgba(27,140,78,0.1);border:1px solid var(--border);color:var(--gold);padding:5px 12px;border-radius:6px;font-size:0.75rem;cursor:pointer}
+.sfooter{padding:16px 20px;border-top:1px solid var(--border)}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--success);animation:blink 1.5s infinite;display:inline-block}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+</style>
+</head>
+<body>
+<div class="login" id="loginDiv">
+  <div class="login-card">
+    <div class="logo">OVER D</div>
+    <div style="color:var(--muted);font-size:0.82rem;margin-bottom:8px">لوحة التحكم السرية</div>
+    <input type="password" class="inp" id="pass" placeholder="كلمة المرور السرية" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn" onclick="doLogin()">دخول</button>
+    <div id="lerr" style="color:var(--danger);font-size:0.8rem;margin-top:10px"></div>
+  </div>
+</div>
+<aside class="sidebar" id="sidebarDiv" style="display:none">
+  <div class="slogo" style="margin-bottom:16px">OVER D</div>
+  <div class="nitem active" onclick="show('dash',this)">📊 لوحة المعلومات</div>
+  <div class="nitem" onclick="show('rides',this)">🚗 الرحلات</div>
+  <div class="nitem" onclick="show('users',this)">👥 المستخدمون</div>
+  <div class="nitem" onclick="show('drivers',this)">🧑‍✈️ السائقون</div>
+  <div class="nitem" onclick="show('api',this)">⚙️ إعدادات API</div>
+  <div style="position:absolute;bottom:16px;width:100%;padding:0 20px">
+    <div style="display:flex;align-items:center;gap:8px;font-size:0.75rem;color:var(--muted)">
+      <span class="sdot" id="sdot"></span>
+      <span id="sstat">جاري الاتصال...</span>
+    </div>
+  </div>
+</aside>
+<main class="main" id="mainDiv" style="display:none">
+  <div id="p-dash">
+    <div class="ptitle">لوحة المعلومات 📊</div>
+    <div class="sgrid">
+      <div class="scard"><div class="sv" style="color:var(--gold)" id="s1">—</div><div class="sl">إجمالي الإيرادات ﷼</div></div>
+      <div class="scard"><div class="sv" style="color:var(--accent)" id="s2">—</div><div class="sl">إجمالي الرحلات</div></div>
+      <div class="scard"><div class="sv" style="color:var(--success)" id="s3">—</div><div class="sl">المستخدمون</div></div>
+      <div class="scard"><div class="sv" style="color:var(--gold)" id="s4">—</div><div class="sl">السائقون النشطون</div></div>
+    </div>
+    <div class="card">
+      <div class="ch">آخر الرحلات <button class="rfbtn" onclick="loadRides()">🔄</button></div>
+      <div id="ridesT"><div style="padding:30px;text-align:center;color:var(--muted)">جاري التحميل...</div></div>
+    </div>
+  </div>
+  <div id="p-rides" style="display:none">
+    <div class="ptitle">الرحلات 🚗</div>
+    <div class="card"><div class="ch">جميع الرحلات <button class="rfbtn" onclick="loadRides()">🔄</button></div><div id="allRidesT"></div></div>
+  </div>
+  <div id="p-users" style="display:none">
+    <div class="ptitle">المستخدمون 👥</div>
+    <div class="card"><div class="ch">قائمة المستخدمين <button class="rfbtn" onclick="loadUsers()">🔄</button></div><div id="usersT"></div></div>
+  </div>
+  <div id="p-drivers" style="display:none">
+    <div class="ptitle">السائقون 🧑‍✈️</div>
+    <div class="card"><div class="ch">قائمة السائقين</div><div id="driversT"></div></div>
+  </div>
+  <div id="p-api" style="display:none">
+    <div class="ptitle">إعدادات API ⚙️</div>
+    <div class="card">
+      <div class="ch">حالة الاتصال</div>
+      <div style="padding:20px" id="apiDetails">جاري الفحص...</div>
+    </div>
+  </div>
+</main>
+<script>
+const API = "https://velox-backend-production-e360.up.railway.app";
+const SECRET = "!@PQLAMZ--KMM88--hgwrv1234!@";
+
+function doLogin(){
+  if(document.getElementById("pass").value===SECRET){
+    document.getElementById("loginDiv").style.display="none";
+    document.getElementById("sidebarDiv").style.display="block";
+    document.getElementById("mainDiv").style.display="block";
+    localStorage.setItem("v_admin","ok");
+    init();
+  } else {
+    document.getElementById("lerr").textContent="كلمة المرور غير صحيحة ❌";
+  }
+}
+
+function show(page, el){
+  document.querySelectorAll('[id^="p-"]').forEach(p=>p.style.display="none");
+  document.querySelectorAll(".nitem").forEach(n=>n.classList.remove("active"));
+  document.getElementById("p-"+page).style.display="block";
+  el.classList.add("active");
+  if(page==="rides")loadRides();
+  if(page==="users")loadUsers();
+  if(page==="api")loadApiInfo();
+}
+
+async function init(){
+  checkHealth();
+  loadStats();
+  loadRides();
+}
+
+async function checkHealth(){
+  try{
+    const d=await fetch(API+"/health").then(r=>r.json());
+    const ok=d.status==="healthy";
+    document.getElementById("sdot").style.background=ok?"#3DFFA0":"#FF4D6A";
+    document.getElementById("sstat").textContent=ok?"متصل ✅":"غير متصل ❌";
+  }catch(e){document.getElementById("sstat").textContent="خطأ ❌";}
+}
+
+function loadStats(){
+  document.getElementById("s1").textContent="٢٤,٣٨٠";
+  document.getElementById("s2").textContent="١,٢٣٤";
+  document.getElementById("s3").textContent="٣٤٥";
+  document.getElementById("s4").textContent="٤٢";
+}
+
+function renderRides(){
+  var rows=[
+    ["a4916c","محمد الأحمدي","حي النخيل","برج المملكة","٤٢.٤٦","completed"],
+    ["b7823d","سارة القحطاني","العليا","المطار","٨٥.٠٠","on_the_way"],
+    ["c9012e","خالد العمري","الروضة","السليمانية","٣٢.٠٠","searching"],
+    ["d1234f","نورة المطيري","الملقا","النخيل","٥٥.٠٠","completed"],
+    ["e5678a","فيصل الدوسري","الياسمين","العليا","٢٨.٠٠","cancelled"],
+  ];
+  var statusMap={completed:["b-ok","مكتملة"],on_the_way:["b-pending","في الطريق"],searching:["b-pending","بحث"],cancelled:["b-err","ملغاة"]};
+  var html="<table><thead><tr><th>المعرف</th><th>المستخدم</th><th>من</th><th>إلى</th><th>السعر</th><th>الحالة</th></tr></thead><tbody>";
+  for(var i=0;i<rows.length;i++){
+    var r=rows[i];
+    var st=statusMap[r[5]]||["b-pending",r[5]];
+    html+="<tr><td style=\"color:var(--muted);font-size:0.72rem\">"+r[0]+"...</td><td>"+r[1]+"</td><td>"+r[2]+"</td><td>"+r[3]+"</td><td style=\"color:var(--gold);font-weight:600\">"+r[4]+" ﷼</td><td><span class=\"badge "+st[0]+"\">"+st[1]+"</span></td></tr>";
+  }
+  html+="</tbody></table>";
+  return html;
+}
+function loadRides(){
+  document.getElementById("ridesT").innerHTML=renderRides();
+  if(document.getElementById("allRidesT"))document.getElementById("allRidesT").innerHTML=renderRides();
+}
+
+function loadUsers(){
+  document.getElementById("usersT").innerHTML="<table><thead><tr><th>الاسم</th><th>الهاتف</th><th>المحفظة</th><th>النقاط</th><th>الحالة</th></tr></thead><tbody><tr><td>محمد الأحمدي</td><td>+966500000099</td><td style=\"color:var(--gold)\">١٥٠ ﷼</td><td>١٢٤٠</td><td><span class=\"badge b-ok\">نشط</span></td></tr><tr><td>تجربة الربط</td><td>+966511999888</td><td style=\"color:var(--gold)\">٠ ﷼</td><td>٠</td><td><span class=\"badge b-ok\">نشط</span></td></tr></tbody></table>";
+}
+async function loadApiInfo(){
+  try{
+    var d=await fetch(API+"/health").then(function(r){return r.json();});
+    document.getElementById("apiDetails").innerHTML="<div style=\"display:grid;gap:10px\"><div style=\"padding:12px;background:#F5F5F5;border-radius:8px;font-size:0.82rem\"><span style=\"color:var(--muted)\">API URL: </span><span style=\"color:var(--gold)\">"+API+"</span></div><div style=\"padding:12px;background:#F5F5F5;border-radius:8px\"><span style=\"color:var(--muted)\">Database: </span><span style=\"color:var(--success)\">"+d.database+" MySQL</span></div><div style=\"padding:12px;background:#F5F5F5;border-radius:8px\"><span style=\"color:var(--muted)\">Redis: </span><span style=\"color:var(--success)\">"+d.redis+"</span></div></div>";
+  }catch(e){document.getElementById("apiDetails").textContent="Error: "+e.message;}
+}
+
+if(localStorage.getItem("v_admin")==="ok"){
+  document.getElementById("loginDiv").style.display="none";
+  document.getElementById("sidebarDiv").style.display="block";
+  document.getElementById("mainDiv").style.display="block";
+  init();
+}
+</script>
+</body>
+</html>
