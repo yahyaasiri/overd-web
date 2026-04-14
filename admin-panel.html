@@ -303,7 +303,7 @@ function loadUsers(){
         <td>${x.loyalty_points||0} نقطة</td>
         <td>${x.is_active?"<span class='badge badge-green'>نشط</span>":"<span class='badge badge-red'>محظور</span>"}</td>
         <td>${new Date(x.created_at).toLocaleDateString("ar-SA")}</td>
-        <td>${x.is_active?"<button class='btn btn-red' onclick='banUser(""+x.id+"")'>حظر</button>":"-"}</td>
+        <td>${x.is_active?'<button class="btn btn-red" onclick="banUser(\"'+x.id+'\")" >حظر</button>':'-'}</td>
       </tr>`).join("");
     document.getElementById("users-table").innerHTML = rows.length ?
       "<table><thead><tr><th>الاسم</th><th>الهاتف</th><th>المحفظة</th><th>النقاط</th><th>الحالة</th><th>تاريخ التسجيل</th><th></th></tr></thead><tbody>"+rows+"</tbody></table>" :
