@@ -77,11 +77,11 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <div class="login-logo">OVER<span>D</span></div>
     <div class="login-sub">لوحة تحكم الإدارة</div>
     <div style="position:relative;margin-bottom:12px">
-      <input id="admin-pass" class="login-input" type="password" placeholder="كلمة المرور" style="margin-bottom:0;padding-left:44px">
-      <span onclick="togglePass()" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:1.1rem;user-select:none" id="eye-icon">👁</span>
+      <input id="admin-pass" class="login-input" type="password" placeholder="كلمة المرور" style="margin-bottom:0;padding-left:44px" onkeydown="if(event.key==='Enter')doLogin()">
+      <span id="eye-icon" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:1.1rem;user-select:none" onmousedown="document.getElementById('admin-pass').type='text'" onmouseup="document.getElementById('admin-pass').type='password'" ontouchstart="document.getElementById('admin-pass').type='text'" ontouchend="document.getElementById('admin-pass').type='password'">👁</span>
     </div>
     <div id="login-err" style="color:var(--red);font-size:0.8rem;margin-bottom:12px;display:none">كلمة المرور غير صحيحة</div>
-    <button class="login-btn" id="login-btn">دخول</button>
+    <button style="width:100%;padding:14px;background:#1DB954;border:none;border-radius:10px;color:#0a0a0a;font-size:1rem;font-weight:700;font-family:Tajawal,sans-serif;cursor:pointer" onmousedown="doLogin()">دخول</button>
   </div>
 </div>
 
